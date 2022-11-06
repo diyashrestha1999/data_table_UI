@@ -145,7 +145,7 @@
 
 <script>
 import json from "../assets/array";
-import fs from "fs";
+
   export default {
     data() {
       return {
@@ -181,13 +181,14 @@ import fs from "fs";
 
     },
 
-  saveData(editedItem){
+
+
+    methods: {
+      saveData(editedItem){
     const fs=require('fs')
     const jsonData=JSON.stringify(editedItem,null,2)
     fs.writeFile('../assets/array.json',jsonData)
   },
-
-    methods: {
 
          close () {
         this.dialog = false
