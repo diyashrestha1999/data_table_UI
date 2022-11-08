@@ -144,7 +144,8 @@
 </template>
 
 <script>
-import json from "../assets/array";
+// import json from "../assets/array";
+import axios from 'axios';
 
   export default {
     data() {
@@ -163,7 +164,7 @@ import json from "../assets/array";
           {text: 'Changed From', value: 'changedFrom'},
           {text: 'Changed To', value: 'changedTo'},
         ],
-        desserts: json.desserts,
+        desserts:[],
         editedItem: {
         name: '',
         description: '',
@@ -177,24 +178,26 @@ import json from "../assets/array";
     },
 
     created() {
-
+this.get_products()
 
     },
 
 
 
     methods: {
-      saveData(editedItem){
-    const fs=require('fs')
-    const jsonData=JSON.stringify(editedItem,null,2)
-    fs.writeFile('../assets/array.json',jsonData)
-  },
-
-         close () {
-        this.dialog = false
-      },
+      get_products() {
+      axios({
+        method: "get",
+        url: 'http://localhost:8081/listItems',
+      })
+        .then((response) => {
+          this.desserts = response.data;
+        })
+        .catch((response) => {
+          console.log(response);
+        });},
       save () {
-        this.saveData()
+        // this.saveData()
         // this.desserts.push(this.editedItem)
 
         this.close()
